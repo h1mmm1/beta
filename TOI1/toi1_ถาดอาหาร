@@ -1,0 +1,40 @@
+/* LANG : C++ */
+#include<bits/stdc++.h>
+using namespace std;
+
+queue<int> clsq[11];
+int stid[1001],claSs,id,nclass,nstudent,x,y;
+char runner;
+
+int main(){
+	ios::sync_with_stdio(0);cin.tie(0);
+	cin >> nclass >> nstudent;
+	for(int i=1;i<=nstudent;i++){
+		cin >> claSs >> id;
+		stid[id]=claSs;
+	}
+	while(true){
+        cin >> runner;
+		if(runner=='X'){
+			cout << '0';
+			return 0;
+		}
+		
+		else if(runner=='E'){
+			cin >> x;
+			if(clsq[stid[x]].empty()) clsq[0].push(stid[x]);
+			clsq[stid[x]].push(x);
+		}
+ /* D */       else{   
+			if(clsq[0].empty()){
+				cout << "empty\n";
+				continue;
+			}
+			y=clsq[0].front();
+            cout << clsq[y].front() << "\n";
+			clsq[y].pop();
+            if(clsq[y].empty()) clsq[0].pop();
+		}
+	}
+    return 0;
+}
