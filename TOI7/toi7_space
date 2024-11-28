@@ -1,0 +1,35 @@
+#include<bits/stdc++.h>
+using namespace std;
+int a[16];
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+	int n=1,m;
+  cin >> m;
+  for(int i=1;i<=m;i++){
+    n*=2;
+  }
+  for(int i=0;i<n;i++){
+    int x=0;
+    int y=i;
+    while(y>0){
+      a[x]=y%2;
+      y/=2;
+      x++;
+    }
+    for(int k=0;k<m;k++){
+      if(a[k]==0){
+        for(int j=m-1;j>=0;j--){
+          cout << a[j];
+        }
+        cout<<" ";
+        for(int j=m-1;j>=0;j--){
+          if(j==k) cout<<1;
+          else cout << a[j];
+        }
+        cout << "\n";
+      }
+    }
+  }
+		
+}

@@ -1,0 +1,36 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+	int n;
+	cin >> n;
+	int cnt1=0,cnt2=0;
+	int sum1=n,sum2=n;	
+	for(int i=1;i<=2*n;i++){
+		int m;
+		cin >> m;
+		if(m%2==0){
+			cnt1++;
+			cnt2=0;
+			if(cnt1<3) sum1--;
+			else sum1-=3;
+			if(sum1<=0){
+				cout << '0' << '\n' << m;
+				break;
+			} 
+		}
+		else if(m%2==1){
+			cnt2++;
+			cnt1=0;
+			if(cnt2<3) sum2--;
+			else sum2-=3;
+			if(sum2<=0){
+				cout << '1' << '\n' << m;
+				break;
+			}
+		}
+		//cout << cnt1 << ' ' <<cnt2<< "\n";
+		//cout << sum1 << ' ' << sum2 << "\n";
+	}
+}

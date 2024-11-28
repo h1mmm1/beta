@@ -1,0 +1,30 @@
+#include<bits/stdc++.h>
+using namespace std;
+const int N=1005;
+int a[N][N],dp[N][N];
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+	int n,m,k;
+	cin >> n  >> m >> k;
+	for(int i=1;i<=n;i++){
+		for(int j=1;j<=m;j++){
+			cin >> a[i][j];
+			dp[i][j]=a[i][j]-dp[i-1][j-1]+dp[i-1][j]+dp[i][j-1];
+		}
+	}
+	int mx=0;
+	for(int i=k;i<=n;i++){
+		for(int j=k;j<=m;j++){
+			mx=max(dp[i][j]-dp[i-k][j]-dp[i][j-k]+dp[i-k][j-k],mx);
+		}
+	}
+	cout << mx;
+//	cout << "\n";
+//	for(int i=1;i<=n;i++){
+//		for(int j=1;j<=m;j++){
+//			cout << dp[i][j] << ' ';
+//		}
+//		cout << "\n";
+//	}
+}

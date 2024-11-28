@@ -1,0 +1,30 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+string str; 
+void rs(int n){
+  if(n<0) return;
+	if(n==0){
+		cout << str << 'E' << "\n";
+    return;
+	}
+  
+  str+="--\n";
+  rs(n-1);
+  str.pop_back();  
+  str.pop_back();
+  str.pop_back();
+  str+="||\n";
+  rs(n-2);
+  str.pop_back();
+  str.pop_back();
+  str.pop_back();
+}
+
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+    int n;
+	cin >> n;
+	rs(n);
+}

@@ -1,0 +1,24 @@
+#include<bits/stdc++.h>
+using namespace std;
+using pii=pair<int,int>;
+const int N=5e5+5;
+int a[N],dp[N];
+priority_queue<pii,vector<pii>,greater<pii>> q;
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+	int n,m;
+	cin >> n >> m;
+	for(int i=1;i<=n;i++){
+		cin >> a[i];
+	}
+	dp[1]=a[1];
+	q.push({a[1],1});
+	for(int i=2;i<=n;i++){
+		while(i-q.top().second>m) q.pop();
+		dp[i]=q.top().first+a[i];
+		q.push({q.top().first+a[i],i});
+	}
+	cout << dp[n];
+//	for(int i=1;i<=n;i++) cout << dp[i] << '\n';
+}

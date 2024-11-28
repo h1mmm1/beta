@@ -1,0 +1,41 @@
+#include<bits/stdc++.h>
+using namespace std;
+const int N=105;
+char a[N][N];
+string s="";
+int n,m,k;
+
+inline void rec(int x,int y){
+	if(x==k){
+//		cout << s;
+		for(auto e:s) cout << e << "\n";
+		return;
+	}
+	if(a[x+1][y]=='0'){
+		s+='3';
+		rec(x+1,y);
+		s.pop_back();
+	}
+	if(a[x+1][y+1]=='0'){
+		s+='2';
+		rec(x+1,y+1);
+		s.pop_back();
+	}
+	if(a[x+1][y-1]=='0'){
+		s+='1';
+		rec(x+1,y-1);
+		s.pop_back();
+	}
+//	cout << s << "\n";
+}
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+	cin >> n >> m >> k;
+	for(int i=1;i<=k;i++){
+		for(int j=1;j<=n;j++){
+			cin >> a[i][j];
+		}
+	}
+	rec(0,m);
+}
