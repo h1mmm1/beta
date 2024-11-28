@@ -1,0 +1,46 @@
+#include<bits/stdc++.h>
+using namespace std;
+const int N=5;
+int dx[]={0,0,1,1,1,-1,-1,-1};
+int dy[]={1,-1,0,1,-1,0,1,-1};
+double a[N][N],ans=0,n,m,mn=1e18;
+bool vis[N][N];
+
+void rec(double x,int sum){
+	if(sum==n*m){
+		mn=min(x,mn);
+		return;
+	}
+	for(int i=1;i<=n;i++){
+		for(int j=1;j<=m;j++){
+			if(vis[i][j]) continue;
+			vis[i][j]=true;
+			for(int k=0;k<8;k++){
+				int xx=dx[k]+i;
+				int yy=dy[k]+j;
+				if(xx<1 || yy<1 || xx>n || yy>m) continue;				
+				a[xx][yy]+=a[i][j]*0.1;
+			}
+			rec(x+a[i][j],sum+1);
+			vis[i][j]=false;
+			for(int k=0;k<8;k++){			
+				int xx=dx[k]+i;
+				int yy=dy[k]+j;
+				if(xx<1 || yy<1 || xx>n || yy>m) continue;					
+				a[xx][yy]-=a[i][j]*0.1;
+			}			
+		}
+	}
+}
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+	cin >> n >> m;
+	for(int i=1;i<=n;i++){
+		for(int j=1;j<=m;j++){
+			cin >> a[i][j];
+		}
+	}
+	rec(0,0);
+	printf("%.2lf",mn);
+}

@@ -1,0 +1,84 @@
+#include<bits/stdc++.h>
+using namespace std;
+char a[70][70];
+int dp[70][70];
+bool vis[70][70];
+queue<pair<int,int>> q;
+int dx[4]={0,0,1,-1};
+int dy[4]={1,-1,0,0};
+int n,m;
+int bfs(int _x,int _y,int h){
+	int cnt=0;
+	//cout << _x << ' ' << _y << ' ' << h<< "\n";
+	for(int i=_x-h+1;i<=_x;i++){
+		for(int j=_y-h+1;j<=_y;j++){
+			//cout << i << ' ' << j << "\n";
+			if(vis[i][j]==false && a[i][j]=='P'){			
+				q.push({i,j});
+				cnt++;
+				//cout << cnt << "\n";
+				while(!q.empty()){
+					int x=q.front().first;
+					int y=q.front().second;
+					q.pop();
+					for(int k=0;k<4;k++){
+						int xx=x+dx[k];
+						int yy=y+dy[k];
+						if(xx<1 || yy<1 || xx>m || yy>n) continue;
+						if(vis[xx][yy]==false && a[xx][yy]=='P'){
+							q.push({xx,yy});
+							vis[xx][yy]=true;
+						}
+					}
+				}
+			}
+		}
+	}
+	return cnt;
+}
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+	int h=0,ans=INT_MAX;
+	cin >> n >> m;
+	for(int i=1;i<=m;i++){
+		for(int j=1;j<=n;j++){
+			cin >> a[i][j];
+		}
+	}
+	
+	for(int i=1;i<=m;i++){
+		for(int j=1;j<=n;j++){
+			if(a[i][j]!='T') dp[i][j]=1;
+			dp[i][j]=dp[i-1][j]+dp[i][j-1]-dp[i-1][j-1]+dp[i][j];
+		}
+	}
+	for(int i=1;i<=m;i++){
+		for(int j=1;j<=n;j++){
+			for(int k=min(i,j);k>0;k--){
+				//cout << k <<"\n";
+				if(dp[i-k][j-k]-dp[i-k][j]-dp[i][j-k]+dp[i][j]==k*k){
+					memset(vis,false,sizeof vis);
+					int w=bfs(i,j,k);
+					if(k>h){
+						h=k;
+						ans=w;
+					}
+					else if(k==h){
+						ans=min(ans,w);
+					}
+				}
+			}
+		}
+	}
+/*
+	for(int i=1;i<=m;i++){
+		for(int j=1;j<=n;j++){
+			cout << vis[i][j] << ' ';
+		}
+		cout << "\n";
+	}
+	*/
+	if(h==0) cout << '0' << ' ' << '0';
+	else cout << h*h << ' ' << ans;
+}

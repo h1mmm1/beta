@@ -1,0 +1,43 @@
+#include<bits/stdc++.h>
+using namespace std;
+string button[10]={
+"",//0
+"",//1
+"CAB",//2
+"FDE",//3
+"IGH",//4
+"LJK",//5
+"OMN",//6
+"SPQR",//7
+"VTU",//8
+"ZWXY"//9
+};
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+  vector<char> ans;
+  int c;
+  cin >> c;
+  int  n,m;
+  cin >> n >> m;
+  if(n>1){
+    if(n==7 || n==9) ans.push_back(button[n][m%4]);
+    else ans.push_back(button[n][m%3]);
+  }
+  for(int i=1;i<c;i++){
+    int x,y,z;
+    cin >> x >> y >> z;
+    n=n+x+y*3;
+    if(n>1){
+      if(n==7 || n==9) ans.push_back(button[n][z%4]);
+      else ans.push_back(button[n][z%3]);
+    }  
+    else if(n==1){
+      for(int j=1;j<=z;j++){
+        if(ans.size()>0)ans.pop_back(); 
+      }
+    }
+  }
+  if(ans.size()==0) cout << "null";
+  else for(char e:ans) cout << e;
+}

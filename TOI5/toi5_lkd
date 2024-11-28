@@ -1,0 +1,62 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+  int n;
+  int x=1;
+  cin >> n;
+  for(int i=0;i<n;i++){
+    string s,c;
+    cin >> s;
+    for(int j=0;j<s.size();j+=2){
+      int y=(s[j]-'0')*2+(s[j+1]-'0');
+      if(x==1){
+        if(y==0){
+          c+='0';
+        }
+        else{
+          c+='1';
+          x=2;
+        }
+      }
+      else if(x==2){
+        if(y==1){
+          c+='1';
+          x=4;
+        }
+        else{
+          c+='0';
+          x=3;
+        }        
+      }
+      else if(x==3){
+        if(y==3){
+          c+='0';
+          x=1;
+        }
+        else{
+          c+='1';
+          x=2;
+        }        
+      }
+      else if(x==4){
+        if(y==2){
+          c+='1';
+        }
+        else{
+          c+='0';
+          x=3;
+        }        
+      }
+      if(c.size()==8){
+        int sum=0;
+        for(int k=0;k<8;k++){
+          sum=sum*2+(c[k]-'0');
+        }
+        char w=sum;
+        cout<<w;
+      }
+    }
+  }
+}

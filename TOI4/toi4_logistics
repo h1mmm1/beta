@@ -1,0 +1,63 @@
+#include<bits/stdc++.h>
+using namespace std;
+using pii=pair<int,int>;
+using ppi=pair<pii,double>;
+const int N=300;
+vector<pii> g[N];
+bool vis[N];
+queue<int> q;
+vector<ppi> ans;
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+	int n;
+	cin >> n;
+	for(int i=1;i<=n;i++){
+		char s,c;
+		int m;
+		cin >> s >> c >> m;
+		int x=int(s-'A');
+		int y=int(c-'A');
+		g[x].push_back({y,m});
+		g[y].push_back({x,m});
+	}
+	q.push(int('X'-'A'));
+	while(!q.empty()){
+		int x=q.front();
+		q.pop();
+		if(vis[x]) continue;
+		vis[x]=true;
+		if(x==int('Y'-'A')) break;
+		vector<double> p;
+		for(auto e:g[x]){
+			int xx=e.first;
+			int ll=e.second;
+			if(vis[xx]==false){
+				p.push_back(ll);
+				if(q.empty()) q.push(xx);				
+			}
+		}
+		if(p.size()==0){
+			cout << "broken";
+			return 0;
+		}
+		sort(p.begin(),p.end());
+		int cnt=p.size();
+//		if(x==int('a'-'A')){
+//			for(auto e:p){
+//				printf("%.1f ",e);
+//			}
+//		}
+		if(cnt%2==1) ans.push_back({{x,q.front()},p[cnt/2]});
+		else ans.push_back({{x,q.front()},(p[cnt/2]+p[cnt/2-1])/2});
+	}
+	double sum=0;
+	for(auto e:ans){
+		char x=char(e.first.first+'A'),y=char(e.first.second+'A');
+		printf("%c ",x);
+		printf("%c ",y);
+		printf("%.1lf\n",e.second);
+		sum+=e.second;
+	}
+	printf("%.1lf",sum);
+}
