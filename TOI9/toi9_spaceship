@@ -1,0 +1,39 @@
+#include<bits/stdc++.h>
+using namespace std;
+const int N=25;
+int X[N],Y[N],Z[N],M[N],K[N],C[N],mn=INT_MAX;
+bool vis[N];
+int n,m;
+vector<int> p;
+
+inline void rec(int sum,int x,int y,int z){
+//	cout << sum << ' ' << x << ' ' << y << ' ' << z << "\n";
+	if(x<=0 && y<=0 && z<=0){
+		mn=min(mn,sum);
+		return;
+	}
+	for(int i=1;i<=m;i++){
+		if(vis[i]) continue;
+		vis[i]=true;
+		int cnt=sum;
+		int j=p.back();
+		cnt+=abs(X[i]-X[j])*abs(X[i]-X[j]);
+		cnt+=abs(Y[i]-Y[j])*abs(Y[i]-Y[j]);
+		cnt+=abs(Z[i]-Z[j])*abs(Z[i]-Z[j]);
+		p.push_back(i);
+		rec(cnt,x-M[i],y-K[i],z-C[i]);
+		vis[i]=false;
+		p.pop_back();
+	}
+}
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+	cin >> n >> X[0] >> Y[0] >> Z[0] >> m;
+	for(int i=1;i<=m;i++){
+		cin >> X[i] >> Y[i] >> Z[i] >> M[i] >> K[i] >> C[i];
+	}
+	p.push_back(0);
+	rec(0,n,n,n);
+	cout << mn;
+}

@@ -1,0 +1,31 @@
+#include<bits/stdc++.h>
+using namespace std;
+int a[105];
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+	int n,m,l=0,r=0;
+	cin >> n >> m;
+	for(int i=1;i<=m;i++){
+		cin >> a[i];
+		l=max(a[i],l);
+		r+=a[i];
+	}
+	while(r>l){
+		int mid=(r+l)/2;
+		int sum=0;
+		int cnt=1;
+		for(int i=1;i<=m;i++){
+			sum+=a[i];
+			if(sum>mid){
+				cnt++;
+				sum=a[i];
+			}
+		}
+		if(cnt<=n){
+			r=mid;
+		}
+		else l=mid+1;
+	}
+	cout << r;
+}

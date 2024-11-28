@@ -1,0 +1,51 @@
+#include<bits/stdc++.h>
+using namespace std;
+const int N=30;
+vector<int> g[N];
+vector<int> ans;
+int n,cnt;
+bool vis[N][N],chk=true;
+
+inline void rec(int x){
+	if(chk==false) return;
+	if(ans.size()==n){
+		cout << char(cnt+'A') << ' ';
+		for(auto e:ans){
+			cout << char(e+'A') << ' ';
+			chk=false;
+		}
+		return;
+	}
+	for(auto e:g[x]){
+		int xx=e;
+		if(vis[x][xx] || vis[xx][x]) continue;
+		vis[x][xx]=vis[xx][x]=true;
+		ans.push_back(xx);
+		rec(xx);
+		ans.pop_back();
+		vis[x][xx]=vis[xx][x]=false;
+	}
+}
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);	
+	cin >> n;
+	for(int i=1;i<=n;i++){
+		string s;
+		cin >> s;
+		g[s[0]-'A'].push_back(s[1]-'A');
+		g[s[1]-'A'].push_back(s[0]-'A');
+	}
+	for(int i=0;i<26;i++){
+		if(g[i].size()%2==1){
+			cnt=i;
+			rec(i);			
+		}
+	}
+	for(int i=0;i<26;i++){
+		if(g[i].size()%2==0){
+			cnt=i;
+			rec(i);			
+		}
+	}	
+}

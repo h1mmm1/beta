@@ -1,0 +1,45 @@
+#include<bits/stdc++.h>
+using namespace std;
+const int N=2e5+5,M=1e6+5;
+vector<pair<int,int>> p;
+bool vis[N];
+int a[M];
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+	int n,m,k;
+	cin >> n >> m >> k;
+	for(int i=1;i<=m;i++){
+		cin >> a[i];
+	}
+	for(int i=1;i<=k;i++){
+		int x,y;
+		cin >> x >> y;
+		p.push_back({y,x});
+	}
+	sort(p.begin(),p.end());
+	int h;
+	cin >> h;
+	vis[h]=true;
+	for(auto e:p){
+		int y=e.second;
+		swap(vis[y],vis[y+1]);
+		if(h==y) h=y+1;
+		else if(h==y+1) h=y;
+		vis[h+1]=true;
+		vis[h-1]=true;		
+	}
+	bool chk=false;
+	int mx=a[h];
+	for(int i=1;i<=m;i++){
+		if(vis[i]==true){
+			if(mx<a[i]){
+				mx=a[i];
+				chk=true;
+			}
+		}
+	}
+	cout << mx << "\n";
+	if(chk==false) cout << "NO";
+	else cout << "USE";
+}
