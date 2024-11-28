@@ -1,0 +1,45 @@
+#include<bits/stdc++.h>
+using namespace std;
+using ll=long long int;
+using pii=pair<ll,ll>;
+using ppi=pair<ll,pii>;
+const int N=2e5+5;
+vector<ppi> p;
+ll pa[N];
+
+int find(int v){
+  if(pa[v]==v) return v;
+  return pa[v]=find(pa[v]); 
+}
+
+void u(int b,int c){
+  b=find(b);
+  c=find(c);
+  if(b!=c){
+    pa[b]=c;
+  }
+}
+
+int main(){
+  ios::sync_with_stdio(0); cin.tie(0);
+  ll n,m,ans=0;
+  scanf("%lld%lld",&n,&m);
+  for(int i=1;i<=n;i++){
+    pa[i]=i;
+  }
+  for(int i=1;i<=m;i++){
+    ll a,b,c;
+    scanf("%lld%lld%lld",&a,&b,&c);
+    p.push_back({c-1,{a,b}});
+  }
+  sort(p.begin(),p.end(),greater<ppi>());
+  for(auto e:p){
+    int c=e.first;
+    int a=e.second.first;
+    int b=e.second.second;
+    if(find(b)==find(a)) continue;
+    u(a,b);
+    ans+=c;
+  }
+  printf("%lld",ans);
+}

@@ -1,0 +1,35 @@
+#include<bits/stdc++.h>
+using namespace std;
+using ll=long long int;
+const int N=5e5+5;
+unordered_map<ll,ll> mp;
+ll a[N];
+vector<ll> p;
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+	ll n,cnt=0,ans1,ans2=1e18,sum=0,mn=1e18;
+	cin >> n;
+	for(int i=1;i<=n;i++){
+		cin >> a[i];
+		mn=min(mn,a[i]);
+	}
+	for(int i=1;i<=n;i++){
+		int x;
+		cin >> x;
+		mp[x]+=a[i];
+		cnt+=x;
+	}
+	for(auto e:mp) p.push_back(e.first);
+	sort(p.begin(),p.end());
+	for(auto e:p){
+		if(e>mn) break;
+		ll x=cnt-e*n+sum;
+		sum+=mp[e];
+		if(x<ans2){
+			ans2=x;
+			ans1=e;
+		}
+	}
+	cout << ans1 << ' ' << ans2;
+}

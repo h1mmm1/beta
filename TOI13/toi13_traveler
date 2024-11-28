@@ -1,0 +1,71 @@
+#include<bits/stdc++.h>
+using namespace std;
+using pii=pair<int,int>;
+const int N=1e4+5;
+vector<pii> g[N];
+int dis[N],dis_chk[N];
+bool vis1[N],vis2[N];
+priority_queue<pii,vector<pii>,greater<pii>> q;
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+	int n,m,X,y,z;
+	cin >> n >> m >> X >> y >> z;
+	for(int i=1;i<=m;i++){
+		int a,b,c;
+		cin >> a >> b >> c;
+		g[a].push_back({b,c});
+		g[b].push_back({a,c});
+	}
+	for(int i=0;i<=n;i++){
+		dis[i]=1e9;
+		dis_chk[i]=1e9;
+	}
+	dis[X]=0;
+	q.push({dis[X],X});
+	while(!q.empty()){
+		int l=q.top().first;
+		int x=q.top().second;
+		q.pop();
+		if(vis1[x]) continue;
+		vis1[x]=true;
+		for(auto e:g[x]){
+			int xx=e.first;
+			int ll=e.second;
+			if(vis1[xx]==false && dis[xx]>dis[x]+ll){
+				dis[xx]=dis[x]+ll;
+				q.push({dis[xx],xx});
+			}
+		}
+	}
+	if(dis[y]<=z){
+		cout << y << ' ' << dis[y] << ' ' << '0';
+	}
+	else{
+		dis_chk[y]=0;
+		q.push({dis_chk[y],y});
+		while(!q.empty()){
+			int l=q.top().first;
+			int x=q.top().second;
+			q.pop();
+			if(vis2[x]) continue;
+			vis2[x]=true;
+			for(auto e:g[x]){
+				int xx=e.first;
+				int ll=e.second;
+				if(vis2[xx]==false && dis_chk[xx]>dis_chk[x]+ll){
+					dis_chk[xx]=dis_chk[x]+ll;
+					q.push({dis_chk[xx],xx});
+				}
+			}
+		}
+		int ans1,ans2=INT_MAX;
+		for(int i=0;i<n;i++){
+			if(dis[i]<=z && dis_chk[i]<ans2){
+				ans1=i;
+				ans2=dis_chk[i];
+			}
+		}
+		cout << ans1 << ' ' << dis[ans1] << ' ' << ans2;
+	}
+}

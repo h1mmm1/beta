@@ -1,0 +1,55 @@
+#include<bits/stdc++.h>
+using namespace std;
+using pii=pair<int,int>;
+using piii=pair<pii,int>;
+vector<pii> g[2005];
+bool vis[2005];
+vector<pii> dis[2005];
+priority_queue<piii,vector<piii>,greater<piii>> q;
+
+int main(){
+   ios::sync_with_stdio(0); cin.tie(0);
+   int n,p,u,e;
+   cin >> n >> p >> u >> e;
+   for(int i=1;i<=e;i++){
+     int a,b,c;
+     cin >> a >> b >> c;
+     g[a].push_back({b,c});
+   }
+  q.push({{0,p},0});
+  while(!q.empty()){
+    int x=q.top().first.first;
+    int y=q.top().first.second;
+    int l=q.top().second;
+    q.pop();
+    
+    for(auto e:g[y]){
+      int yy=e.first;
+      int ll=e.second;
+      bool chk=true;
+      for(auto e:dis[yy]){
+          if(e.first<x+ll && e.second<l+1){
+            chk=false;
+          }
+      }
+      if(chk){
+        dis[yy].push_back({x+ll,l+1});
+        q.push({{x+ll,yy},l+1});
+      }
+      
+    }
+  }
+  int r;
+  cin >> r;
+  while(r--){
+    int h;
+    cin >> h;
+    int mn=INT_MAX;
+    for(auto e:dis[u]){
+      if(e.first+((e.second-1)*h)<mn){
+        mn=e.first+((e.second-1)*h);
+      }
+    }
+    cout << mn << ' ';
+  }
+}

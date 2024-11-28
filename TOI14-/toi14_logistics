@@ -1,0 +1,65 @@
+#include<bits/stdc++.h>
+using namespace std;
+using pii=pair<int,int>;
+using ppi=pair<pii,pii>;
+const int N=105;
+int a[N];
+vector<pii> g[N];
+int dis[N][N][2];
+bool vis[N][N][2];
+priority_queue<ppi,vector<ppi>,greater<ppi>> q;
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+	int n;
+	cin >> n;
+	for(int i=1;i<=n;i++) cin >> a[i];
+	int s,d,f,m;
+	cin >> s >> d >> f >> m;
+	for(int i=1;i<=m;i++){
+		int aa,b,c;
+		cin >> aa >> b >> c;
+		g[aa].push_back({b,c});
+		g[b].push_back({aa,c});
+	}
+	for(int i=1;i<N;i++){
+		for(int j=0;j<N;j++){
+			dis[i][j][0]=1e9;
+			dis[i][j][1]=1e9;
+		}
+	}
+	int ans=INT_MAX;
+	dis[s][0][0]=0;
+	q.push({{dis[s][0][0],s},{0,0}});
+	while(!q.empty()){
+		int l=q.top().first.first;
+		int x=q.top().first.second;
+		int oil=q.top().second.first;
+		int chk=q.top().second.second;
+		q.pop();
+		if(x==d){
+			if(chk==0) ans=min(ans,l);
+			else ans=min(ans,l+(a[x]*(f-oil)));
+		}
+		if(vis[x][oil][chk]) continue;
+		vis[x][oil][chk]=true;
+		if(oil!=f && dis[x][oil+1][chk]>dis[x][oil][chk]+a[x]){
+			dis[x][oil+1][chk]=dis[x][oil][chk]+a[x];
+			q.push({{dis[x][oil+1][chk],x},{oil+1,chk}});
+		}
+		if(chk==0 && oil!=f && dis[x][f][1]>dis[x][oil][chk]){
+			dis[x][f][1]=dis[x][oil][chk];
+			q.push({{dis[x][f][1],x},{f,1}});
+		}
+		for(auto e:g[x]){
+			int xx=e.first;
+			int ll=e.second;
+			if(oil<ll) continue;
+			if(vis[xx][oil-ll][chk]==false && dis[xx][oil-ll][chk]>dis[x][oil][chk]){
+				dis[xx][oil-ll][chk]=dis[x][oil][chk];
+				q.push({{dis[xx][oil-ll][chk],xx},{oil-ll,chk}});
+			}
+		}
+	}
+	cout << ans;
+}

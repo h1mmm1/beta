@@ -1,0 +1,47 @@
+#include<bits/stdc++.h>
+using namespace std;
+using pii=pair<int,int>;
+const int N=2005;
+char a[N][N];
+queue<pii> q;
+int dx[]={0,0,1,-1};
+int dy[]={1,-1,0,0};
+int vis[N][N];
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+	int n,m;
+	cin >> n >> m;
+	for(int i=1;i<=n;i++){
+		for(int j=1;j<=m;j++){
+			cin >> a[i][j];
+			if(a[i][j]=='X'){
+				q.push({i,j});
+			}
+		}
+	}
+	int ans1=0,ans2=0;
+	while(!q.empty()){
+		int x=q.front().first;
+		int y=q.front().second;
+		q.pop();
+//		cout << x << ' ' << y << "\n";
+		for(int i=0;i<4;i++){
+			int xx=x+dx[i];
+			int yy=y+dy[i];
+			if(xx<1 || yy<1 || xx>n || yy>m) continue;
+			if(a[xx][yy]=='W') continue;
+			if(vis[xx][yy]==0 && a[xx][yy]=='A'){
+				vis[xx][yy]=vis[x][y]+1;
+				ans1++;
+				ans2+=vis[xx][yy]*2;
+				q.push({xx,yy});
+			}
+			else if(vis[xx][yy]==0 && a[xx][yy]=='E'){
+				vis[xx][yy]=vis[x][y]+1;
+				q.push({xx,yy});
+			}
+		}
+	}
+	cout << ans1 << ' '<< ans2;
+}

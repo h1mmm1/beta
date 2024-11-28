@@ -1,0 +1,26 @@
+#include<bits/stdc++.h>
+using namespace std;
+using pii=pair<int,int>;
+int a[1000050];
+int b[1050];
+int dp[10000055];
+
+int main(){
+  ios::sync_with_stdio(0); cin.tie(0);
+  int n,m,k,l;
+  cin >> n >> m >> k >> l;
+  for(int i=1;i<=n;i++){
+    cin >> a[i];
+  }
+  while(k--){
+    int ans=0;
+    auto L=a+1,U=a+1;
+    for(int i=1;i<=m;i++){
+      cin >> b[i];
+      L=lower_bound(U,a+n+1,b[i]-l);
+      U=upper_bound(a+1,a+n+1,b[i]+l);
+      ans+=U-L;
+    }
+    cout<<ans<<"\n";
+  }
+}

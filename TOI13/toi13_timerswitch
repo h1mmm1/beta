@@ -1,0 +1,24 @@
+#include<bits/stdc++.h>
+using namespace std;
+queue<char> q1,q2;
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+	int n;
+	string s;
+	cin >> n >> s;
+	for(auto e:s){
+		q1.push(e);
+	}
+	q2=q1;
+	for(int i=1;i<=n;i++){
+		q1.push(q1.front());
+		q1.pop();
+		if(n%i==0){
+			if(q1==q2){
+				cout << i;
+				return 0; 
+			}
+		}
+	}
+}

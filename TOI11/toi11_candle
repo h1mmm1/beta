@@ -1,0 +1,51 @@
+
+#include<bits/stdc++.h>
+using namespace std;
+char a[2005][2005];
+queue<pair<int,int>> q;
+int dx[8]={0,0,1,1,1,-1,-1,-1};
+int dy[8]={1,-1,1,-1,0,1,-1,0};
+
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+	int n,m;
+	cin >> n >> m;
+	for(int i=1;i<=n;i++){
+		for(int j=1;j<=m;j++){
+			cin >> a[i][j];
+		}
+	}
+	int ans=0;
+	for(int i=1;i<=n;i++){
+		for(int j=1;j<=m;j++){
+			if(a[i][j]=='1'){
+				q.push({i,j});
+				ans++;
+				a[i][j]='0';
+			//	cout << i << ' ' << j << "\n";
+				while(!q.empty()){
+					int x=q.front().first;
+					int y=q.front().second;
+					q.pop();
+					
+					for(int k=0;k<8;k++){
+						int xx=x+dx[k];
+						int yy=y+dy[k];
+						if(a[xx][yy]=='1'){
+							q.push({xx,yy});
+							a[xx][yy]='0';
+						}
+					}
+				}
+			}
+		}
+	}
+//	for(int i=1;i<=n;i++){
+//		for(int j=1;j<=m;j++){
+//			cout << a[i][j] << ' ';
+//		}
+//		cout << "\n";
+//	}
+	cout << ans;
+}
