@@ -1,0 +1,51 @@
+#include<bits/stdc++.h>
+using namespace std;
+const int N=20;
+int a[N][N];
+bool vis[N][N];
+queue<pair<int,int>> q;
+int dx[]={0,0,1,-1};
+int dy[]={1,-1,0,0};
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+	int n,ans=0;
+	cin >> n;
+	for(int i=1;i<=n;i++){
+		for(int j=1;j<=n;j++){
+			cin >> a[i][j];
+		}
+	}
+	for(int i=1;i<=n;i++){
+		for(int j=1;j<=n;j++){
+			if(vis[i][j]==false && a[i][j]!=0){
+				q.push({i,j});
+				vis[i][j]=true;
+				int cnt=1;
+				int xmx=0,ymx=0,xmn=1e9,ymn=1e9;
+				while(!q.empty()){
+					int x=q.front().first;
+					int y=q.front().second;
+					q.pop();
+					xmx=max(xmx,x);
+					ymx=max(ymx,y);
+					xmn=min(xmn,x);
+					ymn=min(ymn,y);
+//					cout << x << ' ' << y << "\n";
+					for(int k=0;k<4;k++){
+						int xx=x+dx[k];
+						int yy=y+dy[k];
+						if(xx<1 || yy<1 || xx>n || yy>n) continue;
+						if(vis[xx][yy]==false && a[xx][yy]==a[i][j]){
+							cnt++;
+							vis[xx][yy]=true;
+							q.push({xx,yy});
+						}
+					}
+				}
+				if(cnt==3 && xmx-xmn==1 && ymx-ymn==1) ans++;
+			}
+		}
+	}
+	cout << ans;
+}

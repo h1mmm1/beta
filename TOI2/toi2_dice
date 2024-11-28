@@ -1,0 +1,40 @@
+#include<bits/stdc++.h>
+using namespace std; 
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+  int n;
+  cin >> n;
+  for(int i=0;i<n;i++){
+    int t=1,f=2,l=3,k=5,r=4,b=6;   
+    string a; 
+    cin >> a;
+    for(int j=0;j<a.size();j++){
+      if(a[j]=='F'){
+        int z=k;
+        k=b; b=f; f=t; t=z; 
+      }
+      else if(a[j]=='B'){
+        int z=b;
+         b=k;k=t; t=f; f=z;
+      } 
+      else if(a[j]=='L'){
+        int z=l;
+         l=t;t=r; r=b; b=z;
+      }
+      else if(a[j]=='R'){
+        int z=t;
+         t=l;l=b;b=r;r=z;
+      }
+      else if(a[j]=='C'){
+        int z=l;
+        l=f;f=r;r=k;k=z;
+      }
+      else if(a[j]=='D'){
+        int z=f;
+        f=l;l=k;k=r;r=z;      
+      }
+    }
+    cout << f << ' ';
+  }
+}

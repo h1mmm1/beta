@@ -1,0 +1,59 @@
+#include<bits/stdc++.h>
+using namespace std;
+char a[30][30];
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+  int n,m;
+  cin >> n >> m;
+  for(int i=0;i<n;i++){
+    for(int j=0;j<m;j++){
+      cin >> a[i][j];
+      if('a'<=a[i][j] && a[i][j]<='z') a[i][j]=a[i][j]+'A'-'a';
+    }
+  }
+  int x;
+  cin >> x;
+  while(x--){
+    string s;
+    cin >> s;
+    for(int i=0;i<s.size();i++){
+      if('a'<=s[i] && s[i]<='z') s[i]=s[i]+'A'-'a';
+    }
+    for(int j=0;j<n;j++){
+      for(int k=0;k<m;k++){
+        if(s[0]==a[j][k]){
+          bool b=false;
+          for(int i=0;i<s.size()-1;i++){ if(s[i+1]!=a[j-i-1][k-i-1]) b=true; }//nw
+          if(b==false) { cout << j << ' ' << k << '\n'; k=m;j=n; break; }
+          b=false;
+          for(int i=0;i<s.size()-1;i++){ if(s[i+1]!=a[j-i-1][k]) b=true; } //n
+          if(b==false) { cout << j << ' ' << k << '\n'; k=m;j=n; break; } 
+          b=false;
+          for(int i=0;i<s.size()-1;i++){ if(s[i+1]!=a[j-i-1][k+i+1]) b=true; } //ne
+          if(b==false) { cout << j << ' ' << k << '\n'; k=m;j=n; break; }
+          b=false;
+          for(int i=0;i<s.size()-1;i++){ if(s[i+1]!=a[j][k-i-1]) b=true; } //w
+          if(b==false) { cout << j << ' ' << k << '\n'; k=m;j=n; break; }
+          b=false;
+          for(int i=0;i<s.size()-1;i++){ if(s[i+1]!=a[j][k+i+1]) b=true; } //e
+          if(b==false) { cout << j << ' ' << k << '\n'; k=m;j=n; break; }
+          b=false;
+          for(int i=0;i<s.size()-1;i++){ if(s[i+1]!=a[j+i+1][k-i-1]) b=true; } //ws
+          if(b==false) { cout << j << ' ' << k << '\n'; k=m;j=n; break; }
+          b=false;
+          for(int i=0;i<s.size()-1;i++){ if(s[i+1]!=a[j+i+1][k]) b=true; } //s
+          if(b==false) { cout << j << ' ' << k << '\n'; k=m;j=n; break; }
+          b=false;
+          for(int i=0;i<s.size()-1;i++){ if(s[i+1]!=a[j+i+1][k+i+1]) b=true; } //se
+          if(b==false) { cout << j << ' ' << k << '\n'; k=m;j=n; break; }
+          b=false;
+      }
+    }
+   }
+ }
+}
+/*
+  n 
+w   e
+  s
+*/
