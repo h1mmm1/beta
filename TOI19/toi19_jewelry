@@ -1,0 +1,32 @@
+#include<bits/stdc++.h>
+using namespace std;
+using ll=long long int;
+ll dp[1000005];
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+	int n;
+	long long int ans=0,cnt=0;
+	string s;
+	cin >> n >> s;
+	for(int i=1;i<=n;i++){
+		if(s[i-1]=='F'){
+			ans+=cnt;
+			continue;
+		}
+		int r=i;
+		while(r<n && s[r]=='T') r++;
+		for(int j=i;j<=r;j++){
+			cnt+=j-dp[j-i+1];
+			ans+=cnt;
+			dp[j-i+1]=r-j+i;
+		}
+		i=r;
+	}
+	/*
+	for(int i=1;i<=n;i++){
+		cout << dp[i] << ' ';
+	}
+	*/
+	cout << ans;
+}

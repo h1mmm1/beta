@@ -1,0 +1,60 @@
+#include<bits/stdc++.h>
+using namespace std;
+stack<int> num;
+stack<char> ch;
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+	string s;
+	cin >> s;
+	for(auto e:s){
+//		cout << e << ' ';
+		if('A'<=e && e<='Z') num.push(20);
+		else if(e=='['){
+			ch.push(e);
+		}
+		else if(e==']'){
+			while(!ch.empty() && ch.top()!='['){
+				int x=num.top();
+				num.pop();
+				int y=num.top();
+				num.pop();
+				char c=ch.top();
+				ch.pop();
+				int sum=x+y;
+				if(c=='1') num.push(sum*104/100);
+				else if(c=='2') num.push(sum*108/100);
+				else num.push(sum*116/100);
+			}
+			ch.pop(); // '['
+		}
+		else if('1'<=e && e<='3'){
+			while(!ch.empty() && e<=ch.top() && ch.top()!='['){
+				int x=num.top();
+				num.pop();
+				int y=num.top();
+				num.pop();
+				int c=ch.top();
+				ch.pop();
+				int sum=x+y;
+				if(c=='1') num.push(sum*104/100);
+				else if(c=='2') num.push(sum*108/100);
+				else num.push(sum*116/100);				
+			}
+			ch.push(e);
+		}
+	}
+	while(!ch.empty()){
+		int x=num.top();
+		num.pop();
+		int y=num.top();
+		num.pop();
+		int c=ch.top();
+		ch.pop();
+		int sum=x+y;
+		if(c=='1') num.push(sum*104/100);
+		else if(c=='2') num.push(sum*108/100);
+		else num.push(sum*116/100);		
+	}
+	cout << num.top();
+}

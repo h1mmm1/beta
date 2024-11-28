@@ -1,0 +1,46 @@
+#include<bits/stdc++.h>
+using namespace std;
+const int N=2e5+5;
+int a[N],l[N],r[N];
+vector<int> ll,rr;
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+	int n,m;
+	cin >> n >> m;
+	for(int i=1;i<=n;i++){
+		cin >> a[i];
+	}
+	for(int i=1;i<=n;i++){
+		auto v=lower_bound(ll.begin(),ll.end(),a[i])-ll.begin();
+		if(v==ll.size()){
+			ll.push_back(a[i]);
+			l[i]=v+1;
+		}
+		else{
+			ll[v]=a[i];
+			l[i]=v+1;
+		}
+	}
+	for(int i=n;i>0;i--){
+		auto v=lower_bound(rr.begin(),rr.end(),a[i])-rr.begin();
+		if(v==rr.size()){
+			rr.push_back(a[i]);
+			r[i]=v+1;
+		}
+		else{
+			rr[v]=a[i];
+			r[i]=v+1;
+		}
+	}
+	while(m--){
+		int x;
+		cin >> x;
+		x++;
+		cout << min(r[x],l[x])-1 << "\n";
+	}
+//	cout << "\n";
+//	for(int i=1;i<=n;i++) cout << l[i] << " ";
+//	cout << "\n";
+//	for(int i=1;i<=n;i++) cout << r[i] << ' ';
+}

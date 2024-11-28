@@ -1,0 +1,83 @@
+#include<bits/stdc++.h>
+using namespace std;
+using pii=pair<int,int>;
+const int N=2e5+5;
+int a[N],chk[N];
+vector<pii> g[N];
+int dis[N];
+bool vis[N];
+priority_queue<pii,vector<pii>,greater<pii>> q;
+stack<pii> ans;
+map<pii,bool> tt;
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+	for(int i=0;i<N;i++) dis[i]=INT_MAX;
+	int n,m,k,p,cnt=0;
+	cin >> n >> m >> k >> p;
+	for(int i=1;i<=k;i++){
+		cin >> a[i];
+	}
+	for(int i=1;i<=m;i++){
+		int a,b,c;
+		cin >> a >> b >> c;
+		g[a].push_back({b,c});
+		g[b].push_back({a,c});
+	}
+	memset(chk,-1,sizeof chk);
+	dis[p]=0;
+	q.push({dis[p],p});
+	while(!q.empty()){
+		int l=q.top().first;
+		int x=q.top().second;
+		q.pop();
+		if(vis[x]) continue;
+		vis[x]=true;
+//		if(x!=p){
+//			ans.push_back({x,chk[x]});
+//			cnt++;
+//		}
+		for(auto e:g[x]){
+			int xx=e.first;
+			int ll=e.second;
+			if(vis[xx]==false && dis[xx]>dis[x]+ll){
+				dis[xx]=dis[x]+ll;
+				q.push({dis[xx],xx});
+				chk[xx]=x;
+			}
+		}
+	}
+//	for(int i=1;i<=n;i++) cout << i << ' ' << chk[i] << "\n";
+	for(int i=1;i<=k;i++){
+		int id=a[i];
+		stack<pii> st;
+		while(id>=0){
+			int x=chk[id];
+			if(x<0) break;
+			int u=min(x,id),v=max(x,id);
+			if(tt[{u,v}]==false){
+				tt[{u,v}]=true;
+				st.push({u,v});
+			}
+			id=x;
+//			cout << x << "\n";
+		}
+		while(!st.empty()){
+			ans.push(st.top());
+			st.pop();
+		}
+	}
+	for(int i=1;i<=k;i++) cout << dis[a[i]] << ' ';
+	cout << "\n" << ans.size() << "\n";
+	while(!ans.empty()){
+		cout << ans.top().first << ' ' << ans.top().second << "\n";
+		ans.pop();
+	}
+}
+/*
+3 3 1 1
+1
+0 1 3
+1 2 2
+0 2 10 
+*/

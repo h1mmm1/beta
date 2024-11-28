@@ -1,0 +1,36 @@
+#include<bits/stdc++.h>
+using namespace std;
+long long int sum[505000],cnt[505000];
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+	int n,m;
+	cin >> n >> m;
+	for(int i=1;i<=n;i++){
+		int x;
+		cin >> x;
+		if(x<0){
+			sum[i]=-x;	
+		}
+		else{
+			cnt[i]=x;
+		}
+		cnt[i]+=cnt[i-1];
+		sum[i]+=sum[i-1];
+	}
+	for(int i=1;i<=m;i++){
+		int x,y;
+		cin >> x >> y;
+		auto v=lower_bound(sum+1,sum+1+n,y+sum[x])-sum-1;
+		cout << cnt[v]-cnt[x] << "\n";
+//		cout << v << ' ' << x << ' ' << cnt[v]-cnt[x] << "\n";
+		 
+	}
+//	for(int i=1;i<=n;i++){
+//		cout << sum[i] << ' ';
+//	}
+//	cout << "\n";
+//	for(int i=1;i<=n;i++){
+//		cout << cnt[i] << ' ';
+//	}
+}
