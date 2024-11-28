@@ -1,0 +1,27 @@
+#include<bits/stdc++.h>
+using namespace std;
+bool chk[150];
+
+int main(){
+  ios::sync_with_stdio(0); cin.tie(0);
+  int n;
+  cin >> n;
+  if(n<=5){
+    cout << "no";
+    return 0;
+  }
+  chk[6]=true;
+  chk[9]=true;
+  chk[20]=true;   
+  for(int i=1;i<=n;i++){
+    if(chk[i]==true){
+      chk[i+6]=true;
+      chk[i+9]=true;
+      chk[i+20]=true;
+    }
+  }
+  
+  for(int i=1;i<=n;i++){
+    if(chk[i]==true) cout << i << "\n";
+  }
+}

@@ -1,0 +1,38 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main(){
+	ios::sync_with_stdio(0); cin.tie(0);
+	int i=0,v=0,x=0,l=0,c=0;
+	int n;
+	cin >> n;
+	for(int k=1;k<=n;k++){
+		int h=k/100;
+		if(h==1) c++;
+		else if(h==2) c+=2;
+		else if(h==3) c+=3;
+		else if(h==4) c+=4;
+		h=k%100;
+		h/=10;
+		if(h==1) x++;
+		else if(h==2) x+=2;
+		else if(h==3) x+=3;
+		else if(h==4) x++,l++;
+		else if(h==5) l++;
+		else if(h==6) x+=1,l++;
+		else if(h==7) x+=2,l++;
+		else if(h==8) x+=3,l++;
+		else if(h==9) x++,c++;
+		h=k%10;
+		if(h==1) i++;
+		else if(h==2) i+=2;
+		else if(h==3) i+=3;
+		else if(h==4) i++,v++;
+		else if(h==5) v++;
+		else if(h==6) i++,v++;
+		else if(h==7) i+=2,v++;
+		else if(h==8) i+=3,v++;
+		else if(h==9) i++,x++;
+	}
+	cout << i << ' ' << v << ' ' << x << ' ' << l << ' ' << c;
+}
